@@ -47,6 +47,9 @@ pipeline {
           def mappedStage = ""
           def deployStage = "$DEPLOY_STAGE"
           switch(deployStage) {
+            case "prod-external-2":
+              mappedStage = "legacy-production-external"
+              break
             case "PROD-EXTERNAL":
               mappedStage = "legacy-production-external"
               break
