@@ -71,6 +71,7 @@ pipeline {
           env.DATABASE_PORT = secretsJson.DATABASE_PORT
           env.EPA_SCHEMA_OWNER_USERNAME = secretsJson.EPA_SCHEMA_OWNER_USERNAME
           env.EPA_SCHEMA_OWNER_PASSWORD = secretsJson.EPA_SCHEMA_OWNER_PASSWORD
+          env.ARTIFACTORY_URL = secretsJson.ARTIFACTORY_INTERNAL_URL
 
           sh '''
             docker run -e EPA_DATABASE_ADDRESS=$EPA_DATABASE_ADDRESS \
@@ -81,7 +82,7 @@ pipeline {
                -e EPA_WQX_DUMP_DIR=/usr/src/wqx \
                --rm \
                -v $WORKSPACE:/usr/src \
-               postgres \
+               ${ARTIFACTORY_URL}/docker-official-mirror/postgres:12.4-alpine \
                bash /usr/src/load_epa_wqx_dump_files.sh
             '''
         }
